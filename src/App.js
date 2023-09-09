@@ -8,19 +8,13 @@ import Products from './components/Products';
 import ShoppingCart from './components/ShoppingCart';
 import { ProductContext } from './contexts/ProductContext';
 import { CartContext } from './contexts/CartContext';
+import { useCart } from './components/hooks/useCart';
+import { initialState, useProduct } from './components/hooks/useProduct';
 
 function App() {
-	const [products] = useState(data);
-	const [cart, setCart] = useState([]);
+	const [products] = useProduct("productData",initialState);
+	const [cart, addItem,removeItem] = useCart("cartData",[]);
 
-	const addItem = item => {
-		// add the given item to the cart
-		setCart([...cart, item]);
-	};
-	const removeItem = id => {
-		console.log(id)
-		setCart(cart => cart.filter(n=> n.id !== id))
-	}
 	return (
 		<ProductContext.Provider value={{ products, addItem }}>
 			<CartContext.Provider value={{ cart ,removeItem }}>
